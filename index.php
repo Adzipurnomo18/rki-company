@@ -1,0 +1,1 @@
+<?php $page=$_GET['page']??'home'; $allowed=['home','produk','tentang','pabrik','karir','kontak']; if(!in_array($page,$allowed)){http_response_code(404);$page='home';} include __DIR__."/pages/{$page}.php"; ?>
