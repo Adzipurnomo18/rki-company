@@ -23,7 +23,8 @@ include __DIR__ . '/../inc/header.php';
     <div class="card vision-mission" data-aos="fade-right" data-aos-duration="1200">
       <h2>Visi</h2>
       <p>
-        Ikut memajukan industri dan perekonomian di Indonesia serta menjadi produk lokal yang unggul dan membanggakan Indonesia dimata dunia.
+        Ikut memajukan industri dan perekonomian di Indonesia serta menjadi produk lokal yang unggul dan membanggakan 
+        Indonesia dimata dunia.
       </p>
     </div>
 

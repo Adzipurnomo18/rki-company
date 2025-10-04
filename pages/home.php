@@ -30,97 +30,11 @@ include __DIR__ . '/../inc/header.php';
       <p data-aos="fade-up" data-aos-delay="200">
         Menghadirkan kualitas, ketahanan, dan estetika terbaik untuk setiap ruang.
       </p>
-     <div class="btn-group" data-aos="fade-up" data-aos-delay="300">
-  <a href="index.php?page=produk" class="btn fancy-btn primary-btn">
-    📦 Lihat Produk
-  </a>
-  <a href="index.php?page=tentang" class="btn fancy-btn secondary-btn">
-    ℹ️ Tentang Kami
-  </a>
-</div>
-
-<style>
-/* === Grup Tombol === */
-.btn-group {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-/* === Style Dasar === */
-.fancy-btn {
-  display: inline-block;
-  padding: 12px 28px;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 50px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  z-index: 1;
-}
-
-/* Efek Shine */
-.fancy-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255,255,255,0.2);
-  transition: all 0.4s ease;
-  z-index: -1;
-}
-.fancy-btn:hover::before { left: 0; }
-
-/* === Tombol Utama (Merah) === */
-.primary-btn {
-  background: linear-gradient(135deg, #e60000, #ff4d4d);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(230, 0, 0, 0.4);
-}
-.primary-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(230, 0, 0, 0.6);
-}
-
-/* === Tombol Sekunder (Light Mode) === */
-.secondary-btn {
-  background: #fff;
-  color: #e60000;
-  border: 2px solid #e60000;
-}
-.secondary-btn:hover {
-  background: #e60000;
-  color: #fff;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(230, 0, 0, 0.3);
-}
-
-/* === DARK MODE SUPPORT === */
-[data-theme="dark"] .secondary-btn {
-  background: #1f2937; /* abu-abu gelap */
-  color: #ff4d4d;
-  border: 2px solid #ff4d4d;
-}
-[data-theme="dark"] .secondary-btn:hover {
-  background: #ff4d4d;
-  color: #fff;
-  box-shadow: 0 6px 16px rgba(255, 77, 77, 0.5);
-}
-
-[data-theme="dark"] .primary-btn {
-  background: linear-gradient(135deg, #ff3333, #e60000);
-  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.5);
-}
-[data-theme="dark"] .primary-btn:hover {
-  box-shadow: 0 6px 18px rgba(255, 77, 77, 0.8);
-}
-</style>
-
+      <div class="btn-group" data-aos="fade-up" data-aos-delay="300">
+        <a href="index.php?page=produk" class="btn fancy-btn primary-btn">📦 Lihat Produk</a>
+        <a href="index.php?page=tentang" class="btn fancy-btn secondary-btn">ℹ️ Tentang Kami</a>
+      </div>
+    </div>
 
     <!-- Dots Navigasi -->
     <div class="dots" id="heroDots">
@@ -182,9 +96,9 @@ include __DIR__ . '/../inc/header.php';
         <p>Hadir dalam berbagai motif modern.</p>
       </div>
     </div>
-    <div style="text-align:center; margin-top:20px;">
-      <a href="index.php?page=produk" class="btn-primary">Lihat Semua Produk</a>
-    </div>
+    <div style="text-align:center; margin-top:30px;">
+  <a href="index.php?page=produk" class="btn-fancy">✨ Lihat Semua Produk</a>
+</div>
   </div>
 </section>
 
@@ -217,6 +131,182 @@ include __DIR__ . '/../inc/header.php';
 
 <!-- ================= STYLE ================= -->
 <style>
+/* === Grup Tombol === */
+.btn-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.fancy-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+.fancy-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.2);
+  transition: all 0.4s ease;
+  z-index: -1;
+}
+.fancy-btn:hover::before { left: 0; }
+.primary-btn {
+  background: linear-gradient(135deg, #e60000, #ff4d4d);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(230, 0, 0, 0.4);
+}
+.primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(230, 0, 0, 0.6);
+}
+.secondary-btn {
+  background: #fff;
+  color: #e60000;
+  border: 2px solid #e60000;
+}
+.secondary-btn:hover {
+  background: #e60000;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(230, 0, 0, 0.3);
+}
+[data-theme="dark"] .secondary-btn {
+  background: #1f2937;
+  color: #ff4d4d;
+  border: 2px solid #ff4d4d;
+}
+[data-theme="dark"] .secondary-btn:hover {
+  background: #ff4d4d;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(255, 77, 77, 0.5);
+}
+[data-theme="dark"] .primary-btn {
+  background: linear-gradient(135deg, #ff3333, #e60000);
+  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.5);
+}
+[data-theme="dark"] .primary-btn:hover {
+  box-shadow: 0 6px 18px rgba(255, 77, 77, 0.8);
+}
+
+/* ================= PRODUK UNGGULAN MODERN ================= */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+.product-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  cursor: pointer;
+}
+.product-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+.product-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+.product-card:hover img {
+  transform: scale(1.1);
+  filter: brightness(0.9);
+}
+.product-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 16px;
+}
+.product-card:hover::after { opacity: 1; }
+.product-card h4, 
+.product-card p {
+  margin: 12px 16px;
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+.product-card h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111;
+}
+.product-card p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+}
+.product-card:hover h4,
+.product-card:hover p { color: #fff; }
+.product-card:hover {
+  border: 2px solid #e60000;
+  box-shadow: 0 8px 25px rgba(230, 0, 0, 0.4);
+}
+@media (max-width: 768px) {
+  .products { grid-template-columns: 1fr; }
+  .product-card img { height: 200px; }
+}
+.btn-fancy {
+  display: inline-block;
+  padding: 14px 36px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #e60000, #ff3333);
+  box-shadow: 0 6px 20px rgba(230, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Efek shine */
+.btn-fancy::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+.btn-fancy:hover::before {
+  left: 130%;
+}
+
+/* Hover efek */
+.btn-fancy:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(230, 0, 0, 0.6);
+  background: linear-gradient(135deg, #ff3333, #e60000);
+}
+
+/* ================= TENTANG KAMI ================= */
 .tentang-kami {
   padding: 80px 20px;
   background: linear-gradient(to right, var(--bg-section), var(--bg-color));
@@ -227,10 +317,7 @@ include __DIR__ . '/../inc/header.php';
   overflow: hidden;
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
-#ytplayer {
-  width: 100%;
-  height: 320px;
-}
+#ytplayer { width: 100%; height: 320px; }
 .sound-btn {
   position: absolute;
   bottom: 15px;
@@ -243,9 +330,7 @@ include __DIR__ . '/../inc/header.php';
   cursor: pointer;
   font-size: 18px;
 }
-.sound-btn:hover {
-  background: rgba(0,0,0,0.8);
-}
+.sound-btn:hover { background: rgba(0,0,0,0.8); }
 .tentang-content h2 {
   font-size: 2rem;
   margin-bottom: 15px;
@@ -272,17 +357,43 @@ include __DIR__ . '/../inc/header.php';
 }
 .tentang-content .btn-primary {
   display: inline-block;
-  padding: 10px 18px;
-  border-radius: 6px;
-  background: #e60000;
+  padding: 12px 26px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #e60000, #ff3333);
   color: #fff;
   font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
   transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(230, 0, 0, 0.4);
+  text-decoration: none;
 }
+
+/* Efek shine */
+.tentang-content .btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+.tentang-content .btn-primary:hover::before {
+  left: 120%;
+}
+
+/* Hover efek */
 .tentang-content .btn-primary:hover {
-  background: #c40812;
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(135deg, #ff3333, #e60000);
+  box-shadow: 0 10px 25px rgba(230, 0, 0, 0.6);
 }
+
 </style>
 
 <!-- ================= YOUTUBE API ================= -->
@@ -291,15 +402,10 @@ include __DIR__ . '/../inc/header.php';
 let player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('ytplayer', {
-    videoId: 'ywDm7fHlj9Q', // GANTI ID VIDEO YOUTUBE DISINI
+    videoId: 'ywDm7fHlj9Q',
     playerVars: {
-      autoplay: 1,
-      mute: 1,
-      loop: 1,
-      playlist: 'ywDm7fHlj9Q', // untuk loop video
-      controls: 0,
-      modestbranding: 1,
-      showinfo: 0
+      autoplay: 1, mute: 1, loop: 1, playlist: 'ywDm7fHlj9Q',
+      controls: 0, modestbranding: 1, showinfo: 0
     },
     events: {
       onReady: (event) => {
@@ -309,17 +415,13 @@ function onYouTubeIframeAPIReady() {
     }
   });
 }
-
-// Tombol mute/unmute
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("toggleSound");
   btn.addEventListener("click", () => {
     if (player.isMuted()) {
-      player.unMute();
-      btn.textContent = "🔊";
+      player.unMute(); btn.textContent = "🔊";
     } else {
-      player.mute();
-      btn.textContent = "🔇";
+      player.mute(); btn.textContent = "🔇";
     }
   });
 });
@@ -331,21 +433,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const slides = document.querySelectorAll("#heroSlider .slide");
   const dots   = document.querySelectorAll("#heroDots button");
   let current = 0;
-
   function showSlide(index) {
     slides.forEach((s,i) => s.classList.toggle("active", i===index));
     dots.forEach((d,i) => d.classList.toggle("active", i===index));
     current = index;
   }
-
-  // Auto slide
   setInterval(() => {
     if(slides.length === 0) return;
     let next = (current + 1) % slides.length;
     showSlide(next);
   }, 5000);
-
-  // Klik dot manual
   dots.forEach((dot,i) => {
     dot.addEventListener("click", () => showSlide(i));
   });

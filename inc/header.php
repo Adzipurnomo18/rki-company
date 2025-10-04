@@ -66,16 +66,73 @@ require_once __DIR__ . '/db.php';
     .brand img { height:40px; transition:.3s ease; }
 
     /* ================== NAV MENU DESKTOP ================== */
-    #nav-menu ul {
-      display:flex; gap:24px; list-style:none; margin:0; padding:0;
-    }
+    #nav-menu ul { list-style:none; display:flex; gap:25px; margin:0; padding:0; }
     #nav-menu ul li a {
-      font-weight:600; padding:8px 6px; color:var(--nav-text);
-      transition:color .3s ease;
+      position: relative;
+      font-weight: 600;
+      padding: 6px 4px;
+      color: var(--nav-text);
+      transition: color 0.3s ease;
     }
     #nav-menu ul li a:hover { color:var(--highlight); }
     .nav-cta { background:var(--highlight); color:#fff !important; padding:8px 16px; border-radius:6px; }
     .nav-cta:hover { opacity:.9; }
+
+   /* ===== Aktif untuk Nav Biasa ===== */
+#nav-menu ul li a.active {
+  color: var(--highlight);
+  position: relative;
+}
+
+#nav-menu ul li a.active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--highlight);
+}
+
+/* ===== Aktif untuk Nav CTA (Hubungi Kami) ===== */
+#nav-menu ul li a.nav-cta.active {
+  background: #c40812;   /* merah lebih gelap */
+  color: #fff !important;
+  position: relative;
+}
+
+#nav-menu ul li a.nav-cta.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px; /* sedikit lebih bawah supaya tidak menabrak border radius */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--highlight); /* underline tetap merah */
+  border-radius: 2px;
+}
+
+
+    /* Active state */
+    #nav-menu ul li a.active {
+      color: var(--highlight);
+    }
+    #nav-menu ul li a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--highlight);
+      transition: width 0.3s ease;
+    }
+    #nav-menu ul li a:hover::after {
+      width: 100%;
+    }
+    #nav-menu ul li a.active::after {
+      width: 100%;
+    }
 
     /* ================== HAMBURGER ================== */
     .header-right { display:flex; align-items:center; gap:10px; }
@@ -88,9 +145,13 @@ require_once __DIR__ . '/db.php';
     .mobile-menu {
       position:fixed; top:0; right:-100%; width:80%; max-width:300px; height:100%;
       background:var(--bg-color); box-shadow:-2px 0 10px rgba(0,0,0,.3);
-      transition:right .3s ease; z-index:2000; padding:20px;
+      transition:right .4s ease, opacity .4s ease;
+      z-index:2000; padding:20px; opacity:0;
     }
-    .mobile-menu.active { right:0; }
+    .mobile-menu.active {
+      right:0;
+      opacity:1;
+    }
     .mobile-menu .close-btn {
       position:absolute; top:15px; right:20px; background:none; border:none;
       font-size:28px; cursor:pointer; color:var(--text-color);
@@ -101,8 +162,14 @@ require_once __DIR__ . '/db.php';
     }
     .mobile-menu ul li a {
       font-size:18px; font-weight:600; color:var(--text-color); transition:color .3s;
+      position:relative;
     }
     .mobile-menu ul li a:hover { color:var(--highlight); }
+    .mobile-menu ul li a.active { color:var(--highlight); }
+    .mobile-menu ul li a.active::after {
+      content:""; position:absolute; bottom:-4px; left:0; width:100%; height:2px;
+      background:var(--highlight);
+    }
 
     /* ================== RESPONSIVE ================== */
     @media (max-width: 992px) {
@@ -141,12 +208,12 @@ require_once __DIR__ . '/db.php';
     <!-- Menu Desktop -->
     <nav id="nav-menu">
       <ul>
-        <li><a href="index.php?page=home">Home</a></li>
-        <li><a href="index.php?page=produk">Produk</a></li>
-        <li><a href="index.php?page=tentang">Tentang Kami</a></li>
-        <li><a href="index.php?page=pabrik">Pabrik Kami</a></li>
-        <li><a href="index.php?page=karir">Karir</a></li>
-        <li><a class="nav-cta" href="index.php?page=kontak">Hubungi Kami</a></li>
+        <li><a href="index.php?page=home" class="<?= ($_GET['page']??'home')=='home'?'active':'' ?>">Home</a></li>
+        <li><a href="index.php?page=produk" class="<?= ($_GET['page']??'')=='produk'?'active':'' ?>">Produk</a></li>
+        <li><a href="index.php?page=tentang" class="<?= ($_GET['page']??'')=='tentang'?'active':'' ?>">Tentang Kami</a></li>
+        <li><a href="index.php?page=pabrik" class="<?= ($_GET['page']??'')=='pabrik'?'active':'' ?>">Pabrik Kami</a></li>
+        <li><a href="index.php?page=karir" class="<?= ($_GET['page']??'')=='karir'?'active':'' ?>">Karir</a></li>
+        <li><a class="nav-cta <?= ($_GET['page']??'')=='kontak'?'active':'' ?>" href="index.php?page=kontak">Hubungi Kami</a></li>
       </ul>
     </nav>
   </div>
@@ -156,12 +223,12 @@ require_once __DIR__ . '/db.php';
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-btn">&times;</button>
   <ul>
-    <li><a href="index.php?page=home">Home</a></li>
-    <li><a href="index.php?page=produk">Produk</a></li>
-    <li><a href="index.php?page=tentang">Tentang Kami</a></li>
-    <li><a href="index.php?page=pabrik">Pabrik Kami</a></li>
-    <li><a href="index.php?page=karir">Karir</a></li>
-    <li><a class="nav-cta" href="index.php?page=kontak">Hubungi Kami</a></li>
+    <li><a href="index.php?page=home" class="<?= ($_GET['page']??'home')=='home'?'active':'' ?>">Home</a></li>
+    <li><a href="index.php?page=produk" class="<?= ($_GET['page']??'')=='produk'?'active':'' ?>">Produk</a></li>
+    <li><a href="index.php?page=tentang" class="<?= ($_GET['page']??'')=='tentang'?'active':'' ?>">Tentang Kami</a></li>
+    <li><a href="index.php?page=pabrik" class="<?= ($_GET['page']??'')=='pabrik'?'active':'' ?>">Pabrik Kami</a></li>
+    <li><a href="index.php?page=karir" class="<?= ($_GET['page']??'')=='karir'?'active':'' ?>">Karir</a></li>
+    <li><a class="nav-cta <?= ($_GET['page']??'')=='kontak'?'active':'' ?>" href="index.php?page=kontak">Hubungi Kami</a></li>
     <li><a href="admin/login.php" target="_blank">Login Admin</a></li>
   </ul>
 </div>
