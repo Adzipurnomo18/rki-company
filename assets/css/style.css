@@ -327,31 +327,6 @@ select {
   line-height: 1.8;
 }
 
-/* Visi & Misi */
-.vision-mission {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: var(--shadow);
-  transition: transform .3s ease;
-}
-
-.vision-mission:hover {
-  transform: translateY(-6px);
-}
-
-.vision-mission h2 {
-  color: var(--primary);
-  margin-bottom: 12px;
-}
-
-.vision-mission ul {
-  padding-left: 18px;
-  list-style: disc;
-  color: #374151;
-  line-height: 1.8;
-}
 
 /* Keunggulan Section */
 .center-text {
@@ -1198,6 +1173,67 @@ footer a:hover{color:var(--primary)}
   gap: 30px;
 }
 
+/* ====== Visi & Misi ====== */
+.vision-mission {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+  transition: transform .3s ease, box-shadow .3s ease;
+  line-height: 1.8;
+}
+
+.vision-mission:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* Judul di setiap kotak */
+.vision-mission h2, 
+.vision-mission h3 {
+  color: var(--primary);
+  margin-bottom: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Paragraf dalam kotak */
+.vision-mission p {
+  color: #374151;
+  margin-bottom: 12px;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+/* List di bagian misi */
+.vision-mission ul {
+  padding-left: 20px;
+  margin-top: 6px;
+  list-style: disc;
+  color: #374151;
+  line-height: 1.8;
+}
+
+/* ====== Mode Gelap ====== */
+[data-theme="dark"] .vision-mission {
+  background: #1e293b !important;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .vision-mission h2,
+[data-theme="dark"] .vision-mission h3 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .vision-mission p,
+[data-theme="dark"] .vision-mission ul li {
+  color: #e2e8f0 !important;
+}
+
+
 /* ===================== KONTAK SECTION ===================== */
 .kontak-container {
   display: grid;
@@ -1661,27 +1697,6 @@ footer a:hover{color:var(--primary)}
 [data-theme="dark"] .feature-card h3,
 [data-theme="dark"] .feature-card p {
   color: #fff;
-}
-/* ====== Dark Mode Visi & Misi + Keunggulan ====== */
-[data-theme="dark"] .vision-mission,
-[data-theme="dark"] .features .feature-card {
-  background: #1e293b !important;   /* sama rata */
-  border: 1px solid #334155;        /* garis tipis biar elegan */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-  color: #f1f5f9 !important;        /* teks terang */
-}
-
-/* Judul di box */
-[data-theme="dark"] .vision-mission h3,
-[data-theme="dark"] .features .feature-card h3 {
-  color: #ffffff !important;
-}
-
-/* Isi teks */
-[data-theme="dark"] .vision-mission p,
-[data-theme="dark"] .vision-mission ul li,
-[data-theme="dark"] .features .feature-card p {
-  color: #e2e8f0 !important;
 }
 
 

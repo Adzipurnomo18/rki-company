@@ -1,6 +1,15 @@
-<?php 
-$title='Hubungi Kami'; 
-include __DIR__.'/../inc/header.php'; 
+<?php
+$title = 'Hubungi Kami';
+include __DIR__ . '/../inc/header.php';
+
+$heroKicker   = 'Layanan & Dukungan';
+$heroTitle    = 'Hubungi <span style="color:#ffb4b7">Kami</span>';
+$heroSubtitle = 'Kirim pesan, hubungi langsung, atau kunjungi kantor kami.';
+$heroFull     = true;
+$HERO_MODE    = 'kenburns';
+$heroAccent = '#ff2a33'; // merah cerah global hero
+$heroTitle  = 'Hubungi <span class="accent">Kami';
+include __DIR__ . '/../inc/hero.php';
 ?>
 
 <!-- Hero Section -->

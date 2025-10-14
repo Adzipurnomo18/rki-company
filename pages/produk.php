@@ -1,6 +1,16 @@
-<?php 
-$title = 'Produk'; 
-include __DIR__ . '/../inc/header.php'; 
+<?php
+$title  = 'Produk';
+include __DIR__ . '/../inc/header.php';
+
+// HERO full 1 layar
+$heroKicker   = 'PT Rumah Keramik Indonesia';
+$heroTitle    = 'Koleksi <span style="color:#ffb4b7">Keramik</span> Kami';
+$heroSubtitle = 'Temukan berbagai pilihan keramik dengan kualitas terbaik untuk lantai dan dinding.';
+$HERO_MODE    = 'kenburns';   // atau 'slideshow'
+$heroFull     = true;         // FULL 1 layar
+$heroAccent = '#ff2a33'; // merah cerah global hero
+$heroTitle  = 'Koleksi <span class="accent">Keramik</span> Kami';
+include __DIR__ . '/../inc/hero.php';
 ?>
 
 <!-- Hero Section -->

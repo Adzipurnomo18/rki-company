@@ -1,6 +1,15 @@
-<?php 
-$title = 'Pabrik Kami'; 
-include __DIR__ . '/../inc/header.php'; 
+<?php
+$title = 'Pabrik Kami';
+include __DIR__ . '/../inc/header.php';
+
+$heroKicker   = 'Fasilitas & Operasi';
+$heroTitle    = 'Pabrik & <span style="color:#ffb4b7">Proses Produksi</span>';
+$heroSubtitle = 'Foto dan video pabrik ditarik dari galeri yang dikelola melalui admin.';
+$heroFull     = true;
+$HERO_MODE    = 'kenburns';
+$heroAccent = '#ff2a33'; // merah cerah global hero
+$heroTitle  = 'Pabrik & <span class="accent">Proses Produksi';
+include __DIR__ . '/../inc/hero.php';
 ?>
 
 <!-- Hero Section -->

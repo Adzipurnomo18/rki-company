@@ -22,23 +22,24 @@ if ($gal) {
 
 /**
  * MODE HERO:
- *  - 'kenburns'  : satu layar full, efek zoom-pan halus (tanpa loncat-loncat slide)
- *  - 'slideshow' : fade antar gambar (versi sebelumnya, tapi dibuat lebih smooth)
+ *  - 'kenburns'  : satu layar full, efek zoom-pan halus
+ *  - 'slideshow' : fade antar gambar
  */
-$HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
+$HERO_MODE = 'kenburns';
 ?>
-<!-- ==================== HOME (Modern BUMN) ==================== -->
-
 <style>
 /* =================================================================
-   TOKENS
+   TOKENS & BASE
    ================================================================= */
 :root{
   --brand:#e50914; --brand-600:#d50c16; --brand-700:#c00f18;
   --ink:#0f172a; --muted:#6b7280;
   --bg:#ffffff; --bg-alt:#f7f8fa; --card:#ffffff; --border:#e5e7eb;
   --shadow-sm:0 4px 14px rgba(2,6,23,.06); --shadow-md:0 12px 26px rgba(2,6,23,.08);
-  --r-sm:12px; --r-md:16px; --r-lg:20px; --container:1200px;
+  --r-xs:10px; --r-sm:12px; --r-md:16px; --r-lg:20px; --container:1200px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --a-fast: 320ms var(--ease);
+  --a-med: 600ms var(--ease);
 }
 :root[data-theme="dark"]{
   --ink:#e5e7eb; --muted:#9ca3af;
@@ -54,13 +55,32 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
 .h3{font-size:clamp(20px,2.2vw,26px);}
 .muted{color:var(--muted);}
 
-/* =================================================================
-   HERO FULL – dua mode: Ken Burns & Slideshow
-   ================================================================= */
-.hero-full{
-  position:relative; min-height:calc(100vh - 72px); /* selalu full screen di bawah navbar */
-  isolation:isolate; overflow:hidden; color:#fff;
+/* Page enter fade */
+@media (prefers-reduced-motion:no-preference){
+  body{opacity:0; transform:translateY(6px); transition: opacity .6s var(--ease), transform .6s var(--ease);}
+  body.page-entered{opacity:1; transform:none;}
 }
+
+/* =================================================================
+   HERO FULL – Ken Burns / Slideshow
+   ================================================================= */
+/* HERO FULL – penuh 1 layar, header melayang di atasnya */
+.hero-full{
+  position: relative;
+  block-size: 100svh;         /* aman untuk mobile address bar */
+  min-block-size: 100svh;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+}
+
+@supports (height: 100dvh){
+  .hero-full{
+    block-size: 100dvh;       /* gunakan dvh kalau didukung */
+    min-block-size: 100dvh;
+  }
+}
+
 .hero-layer{position:absolute; inset:0; background-size:cover; background-position:center;}
 .hero-overlay{
   position:absolute; inset:0;
@@ -73,13 +93,13 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
 
 .kicker{font-weight:800; letter-spacing:.12em; text-transform:uppercase; opacity:.95; margin-bottom:12px;}
 .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:20px;}
-.btn-pill{display:inline-flex; align-items:center; gap:10px; padding:12px 20px; border-radius:999px; font-weight:800; text-decoration:none; border:2px solid transparent; transition:.28s cubic-bezier(.22,.61,.36,1);}
+.btn-pill{display:inline-flex; align-items:center; gap:10px; padding:12px 20px; border-radius:999px; font-weight:800; text-decoration:none; border:2px solid transparent; transition:transform .28s var(--ease), box-shadow .28s var(--ease), background .28s var(--ease), color .28s var(--ease);}
 .btn-brand{background:var(--brand); color:#fff; box-shadow:0 10px 28px rgba(229,9,20,.35);}
 .btn-brand:hover{background:var(--brand-600); transform:translateY(-2px);}
 .btn-outline{background:transparent; border-color:#fff; color:#fff;}
 .btn-outline:hover{background:#fff; color:#111;}
 
-/* Ken Burns frames: 3 layer (loop) untuk zoom-pan halus */
+/* Ken Burns */
 .hero-kenburns .kb{opacity:0; animation:fadeIn 9s linear infinite; will-change:transform, opacity;}
 .hero-kenburns .kb.kb-1{animation-name:ken1;}
 .hero-kenburns .kb.kb-2{animation-name:ken2; animation-delay:3s;}
@@ -107,11 +127,8 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
   100%{transform:scale(1.13) translate3d(-0.8%, -1%, 0); opacity:0}
 }
 
-/* Slideshow modern (fade + easing halus) */
-.hero-slideshow .slide{
-  position:absolute; inset:0; background-size:cover; background-position:center;
-  opacity:0; transition:opacity 900ms cubic-bezier(.22,.61,.36,1);
-}
+/* Slideshow */
+.hero-slideshow .slide{position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 900ms var(--ease);}
 .hero-slideshow .slide.is-active{opacity:1;}
 .hero-dots{position:absolute; left:50%; bottom:18px; transform:translateX(-50%); z-index:5; display:flex; gap:8px;}
 .hero-dots button{width:10px; height:10px; border-radius:999px; background:rgba(255,255,255,.55); border:none; cursor:pointer; transition:.2s;}
@@ -127,7 +144,7 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
 .card-feature{
   background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm);
   padding:22px; display:flex; gap:14px; align-items:flex-start; box-shadow:var(--shadow-sm);
-  transition:transform .25s cubic-bezier(.22,.61,.36,1), box-shadow .25s;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease);
 }
 .card-feature:hover{transform:translateY(-3px); box-shadow:var(--shadow-md);}
 .feature-icon{
@@ -136,25 +153,30 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
 }
 
 /* =================================================================
-   PRODUCT CARDS (lebih modern)
+   PRODUCT CARDS
    ================================================================= */
 .card-product{
   background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:var(--shadow-sm);
-  transition:transform .25s cubic-bezier(.22,.61,.36,1), box-shadow .25s;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease);
 }
 .card-product:hover{transform:translateY(-4px); box-shadow:var(--shadow-md);}
 .card-product .media{aspect-ratio:16/9; overflow:hidden;}
-.card-product img{width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.02); transition:transform .35s cubic-bezier(.22,.61,.36,1);}
+.card-product img{width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.02); transition:transform .35s var(--ease);}
 .card-product:hover img{transform:scale(1.06);}
 .card-product .body{padding:14px 16px;}
 .card-product h4{margin:0 0 6px; font-weight:800; font-size:16px;}
 .card-product p{margin:0; color:var(--muted); font-size:14px;}
 
 .section-title{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
-.section-title .h2{margin:0;}
+.section-title .h2{margin:0; position:relative; padding-bottom:8px;}
+.section-title .h2::after{
+  content:""; position:absolute; left:0; bottom:0; height:4px; width:68px; border-radius:3px; background:var(--brand);
+  transform-origin:left; transform:scaleX(0); transition: transform .6s var(--ease);
+}
+.section-title.in .h2::after{ transform:scaleX(1); }
 
 /* =================================================================
-   ABOUT – versi profesional (tipografi rapi + checklist)
+   ABOUT
    ================================================================= */
 .about-wrap{display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:center;}
 @media(max-width:980px){.about-wrap{grid-template-columns:1fr}}
@@ -169,7 +191,7 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
 .btn-glow{
   display:inline-flex; align-items:center; gap:10px; padding:12px 20px; border-radius:999px; color:#fff; font-weight:800;
   background:linear-gradient(135deg, var(--brand), var(--brand-700)); text-decoration:none;
-  box-shadow:0 12px 28px rgba(229,9,20,.35); position:relative; overflow:hidden; transition:.28s cubic-bezier(.22,.61,.36,1);
+  box-shadow:0 12px 28px rgba(229,9,20,.35); position:relative; overflow:hidden; transition:.28s var(--ease);
 }
 .btn-glow::after{
   content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,.10),transparent 45%,transparent 55%,rgba(255,255,255,.10));
@@ -197,22 +219,32 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
   filter:grayscale(1); opacity:.8; transition:.2s; box-shadow:var(--shadow-sm);
 }
 .partner-card:hover{ filter:grayscale(0); opacity:1; transform:translateY(-3px); box-shadow:var(--shadow-md); }
-.partner-card img{ height:40px; max-width:100%; }
+.partner-card img{ height:28px; max-width:100%; }
 
 /* =================================================================
-   SCROLL REVEAL (smooth)
+   REVEAL ENGINE (scroll animations + stagger)
    ================================================================= */
-.reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
-.reveal.is-in{opacity:1; transform:none;}
+.reveal-set{ --stagger: 80ms; }
+.reveal-set .reveal-item{ opacity:0; transform:translateY(16px); filter:blur(2px); transition: opacity var(--a-med), transform var(--a-med), filter var(--a-med); }
+.reveal-set .fade-up{ transform:translateY(16px); }
+.reveal-set .slide-up{ transform:translateY(28px); }
+.reveal-set .zoom-in{ transform:scale(.98); }
+.reveal-set .scale-in{ transform:scale(.92); }
+.reveal-set.in .reveal-item{ opacity:1; transform:none; filter:none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-set .reveal-item{ transition:none; opacity:1; transform:none; filter:none; }
+  body{ transition:none;}
+}
+
+/* bantu spacing kecil */
+.sp-24{height:24px;}
 </style>
 
 <!-- ==================== HERO ==================== -->
 <section class="hero-full <?php echo $HERO_MODE==='kenburns'?'hero-kenburns':'hero-slideshow'; ?>" id="Hero">
   <?php if ($HERO_MODE === 'kenburns'): ?>
-    <?php 
-      // gunakan 3 layer untuk loop halus
-      $kb = array_slice(array_pad($heroImages, 3, end($heroImages)), 0, 3);
-    ?>
+    <?php $kb = array_slice(array_pad($heroImages, 3, end($heroImages)), 0, 3); ?>
     <div class="hero-layer kb kb-1" style="background-image:url('<?php echo $kb[0]; ?>')"></div>
     <div class="hero-layer kb kb-2" style="background-image:url('<?php echo $kb[1]; ?>')"></div>
     <div class="hero-layer kb kb-3" style="background-image:url('<?php echo $kb[2]; ?>')"></div>
@@ -232,7 +264,12 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
   <div class="hero-content">
     <div class="hero-inner">
       <div class="kicker">PT Rumah Keramik Indonesia</div>
-      <h1 class="h1">Produsen Ubin Keramik <span style="color:#ffb4b7">Lantai</span> & <span style="color:#ffb4b7">Dinding</span></h1>
+      <h1 class="h1">
+        Produsen Ubin Keramik
+        <span style="color:#ff2a33">Lantai</span> &
+        <span style="color:#ff2a33">Dinding</span>
+      </h1>
+
       <p class="muted" style="max-width:720px; color:#e5e7eb">Menghadirkan kualitas, ketahanan, dan estetika terbaik untuk setiap ruang.</p>
       <div class="hero-actions">
         <a href="index.php?page=produk" class="btn-pill btn-brand">📦 Lihat Produk</a>
@@ -242,26 +279,27 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
   </div>
 </section>
 
-<!-- ==================== FITUR ==================== -->
-<section class="section-alt reveal">
+<!-- ==================== MENGAPA MEMILIH KAMI ==================== -->
+<section class="section-alt">
   <div class="container-xl">
-    <div class="section-title"><h2 class="h2">Mengapa Memilih Kami?</h2></div>
-    <div class="grid-3">
-      <div class="card-feature">
+    <div class="section-title" id="title-why"><h2 class="h2">Mengapa Memilih Kami?</h2></div>
+
+    <div class="grid-3 reveal-set" data-stagger="100">
+      <div class="card-feature reveal-item fade-up">
         <div class="feature-icon"><i class="fas fa-fire"></i></div>
         <div>
           <h3 class="h3" style="font-size:18px">Teknologi Glaze</h3>
           <p class="muted">Permukaan halus & tahan gores dengan teknologi mutakhir.</p>
         </div>
       </div>
-      <div class="card-feature">
+      <div class="card-feature reveal-item fade-up">
         <div class="feature-icon"><i class="fas fa-award"></i></div>
         <div>
           <h3 class="h3" style="font-size:18px">Standar Mutu Tinggi</h3>
           <p class="muted">QC ketat dari bahan baku hingga tahap akhir produksi.</p>
         </div>
       </div>
-      <div class="card-feature">
+      <div class="card-feature reveal-item fade-up">
         <div class="feature-icon"><i class="fas fa-th-large"></i></div>
         <div>
           <h3 class="h3" style="font-size:18px">Varian Motif Modern</h3>
@@ -272,29 +310,30 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
   </div>
 </section>
 
-<!-- ==================== PRODUK ==================== -->
-<section class="section reveal">
+<!-- ==================== PRODUK UNGGULAN ==================== -->
+<section class="section">
   <div class="container-xl">
-    <div class="section-title">
+    <div class="section-title" id="title-products">
       <h2 class="h2">Produk Unggulan</h2>
       <a href="index.php?page=produk" class="btn-pill btn-brand" style="padding:10px 16px;">Lihat Semua</a>
     </div>
-    <div class="grid-3">
-      <article class="card-product">
+
+    <div class="grid-3 reveal-set" data-stagger="120">
+      <article class="card-product reveal-item zoom-in">
         <div class="media"><img src="assets/img/alabstro.jpg" alt="Keramik Premium"></div>
         <div class="body">
           <h4>Keramik Premium</h4>
           <p>Kualitas terbaik untuk lantai rumah & bangunan.</p>
         </div>
       </article>
-      <article class="card-product">
+      <article class="card-product reveal-item zoom-in">
         <div class="media"><img src="assets/img/Arabescato.jpg" alt="Motif Marmer"></div>
         <div class="body">
           <h4>Motif Marmer</h4>
           <p>Elegan dengan nuansa alam yang mewah.</p>
         </div>
       </article>
-      <article class="card-product">
+      <article class="card-product reveal-item zoom-in">
         <div class="media"><img src="assets/img/Calcita.jpg" alt="Keramik Dinding"></div>
         <div class="body">
           <h4>Keramik Dinding</h4>
@@ -305,77 +344,78 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
   </div>
 </section>
 
-<!-- ==================== TENTANG (rapi & profesional) ==================== -->
-<section class="section-alt reveal">
+<!-- ==================== TENTANG KAMI ==================== -->
+<section class="section-alt">
   <div class="container-xl about-wrap">
-    <div>
-      <h2 class="h2" style="margin-bottom:4px">Tentang Kami</h2>
-      <div class="divider"></div>
-      <p class="lead">
+    <div class="reveal-set" data-stagger="90">
+      <h2 class="h2 reveal-item slide-up" style="margin-bottom:4px">Tentang Kami</h2>
+      <div class="divider reveal-item scale-in"></div>
+      <p class="lead reveal-item fade-up">
         <strong>PT Rumah Keramik Indonesia</strong> berkomitmen menghadirkan 
         <span style="color:var(--brand);font-weight:700;"> produk ubin berkualitas tinggi</span> 
         melalui teknologi modern dan pengendalian mutu berlapis.
       </p>
       <ul class="checklist">
-        <li><i class="fas fa-check-circle"></i><span>Sertifikasi mutu & proses produksi terdokumentasi</span></li>
-        <li><i class="fas fa-check-circle"></i><span>Desain marmer, batu alam, dan kayu yang realistis</span></li>
-        <li><i class="fas fa-check-circle"></i><span>Ketahanan gores & beban sesuai standar</span></li>
-        <li><i class="fas fa-check-circle"></i><span>Jaringan distribusi & layanan purna jual</span></li>
+        <li class="reveal-item fade-up"><i class="fas fa-check-circle"></i><span>Sertifikasi mutu & proses produksi terdokumentasi</span></li>
+        <li class="reveal-item fade-up"><i class="fas fa-check-circle"></i><span>Desain marmer, batu alam, dan kayu yang realistis</span></li>
+        <li class="reveal-item fade-up"><i class="fas fa-check-circle"></i><span>Ketahanan gores & beban sesuai standar</span></li>
+        <li class="reveal-item fade-up"><i class="fas fa-check-circle"></i><span>Jaringan distribusi & layanan purna jual</span></li>
       </ul>
-      <a href="index.php?page=tentang" class="btn-glow">Pelajari Lebih Lanjut</a>
+      <a href="index.php?page=tentang" class="btn-glow reveal-item scale-in">Pelajari Lebih Lanjut</a>
     </div>
-    <div class="card-video">
-      <iframe src="https://www.youtube.com/embed/ywDm7fHlj9Q?autoplay=0&mute=1&controls=1&modestbranding=1"
+    <div class="card-video reveal-set" data-stagger="0">
+      <iframe class="reveal-item zoom-in"
+              src="https://www.youtube.com/embed/ywDm7fHlj9Q?autoplay=0&mute=1&controls=1&modestbranding=1"
               title="Profil Pabrik" frameborder="0" allowfullscreen
               referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
   </div>
 </section>
 
-<!-- ==================== CAPAIAN & MITRA (dengan counter) ==================== -->
+<!-- ==================== CAPAIAN & MITRA ==================== -->
 <section class="section" id="Capaian">
   <div class="container-xl">
-    <div class="section-title">
-      <h2 class="h2">Capaian & Kepercayaan</h2>
-    </div>
+    <div class="section-title" id="title-counters"><h2 class="h2">Capaian & Kepercayaan</h2></div>
 
-    <!-- Ubah angka di data-target; pakai data-format="short" untuk K/M/B; data-suffix="+" jika perlu plus -->
-    <div class="stats">
-      <div class="stat" data-target="15" data-suffix="+">
+    <div class="stats reveal-set" data-stagger="120">
+      <div class="stat reveal-item scale-in" data-target="15" data-suffix="+">
         <strong class="count">0</strong>
         <span>Tahun Pengalaman</span>
       </div>
-      <div class="stat" data-target="250" data-suffix="+">
+      <div class="stat reveal-item scale-in" data-target="250" data-suffix="+">
         <strong class="count">0</strong>
         <span>Proyek Terselesaikan</span>
       </div>
-      <div class="stat" data-target="1200000" data-format="short" data-suffix="+">
+      <div class="stat reveal-item scale-in" data-target="1200000" data-format="short" data-suffix="+">
         <strong class="count">0</strong>
         <span>m² Keramik Terpasang</span>
       </div>
-      <div class="stat" data-target="50" data-suffix="+">
+      <div class="stat reveal-item scale-in" data-target="50" data-suffix="+">
         <strong class="count">0</strong>
         <span>Distribusi Kota</span>
       </div>
     </div>
 
-    <div style="height:24px"></div>
+    <div class="sp-24"></div>
 
-    <div class="partners">
-      <div class="partner-card"><img src="assets/img/mitra1.png" alt="Mitra 1"></div>
-      <div class="partner-card"><img src="assets/img/mitra2.png" alt="Mitra 2"></div>
-      <div class="partner-card"><img src="assets/img/mitra3.png" alt="Mitra 3"></div>
-      <div class="partner-card"><img src="assets/img/mitra4.png" alt="Mitra 4"></div>
-      <div class="partner-card"><img src="assets/img/mitra5.png" alt="Mitra 5"></div>
-      <div class="partner-card"><img src="assets/img/mitra6.png" alt="Mitra 6"></div>
+    <div class="partners reveal-set" data-stagger="60">
+      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra1.png" alt="Mitra 1"></div>
+      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra2.png" alt="Mitra 2"></div>
+      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra3.png" alt="Mitra 3"></div>
+      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra4.png" alt="Mitra 4"></div>
+      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra5.png" alt="Mitra 5"></div>
+      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra6.png" alt="Mitra 6"></div>
     </div>
   </div>
 </section>
 
-<!-- ==================== JS: slideshow + scroll reveal + counters ==================== -->
+<!-- ==================== JS: slideshow + page enter + reveal + counters ==================== -->
 <script>
 (function(){
-  // Slideshow fade (hanya berjalan kalau mode slideshow)
+  // Page enter
+  window.addEventListener('load', ()=> document.body.classList.add('page-entered'));
+
+  // Slideshow (jalan kalau mode slideshow)
   const hero = document.getElementById('Hero');
   if(hero && hero.classList.contains('hero-slideshow')){
     const slides = [...hero.querySelectorAll('.slide')];
@@ -393,16 +433,31 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
     });
   }
 
-  // Scroll reveal halus (tanpa library)
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+  // Section title underline animasi saat masuk
+  const titles = ['title-why','title-products','title-counters']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  const ioTitle = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); ioTitle.unobserve(e.target); }});
+  }, {threshold:.3});
+  titles.forEach(t => ioTitle.observe(t));
+
+  // Reveal engine + stagger
+  const ioReveal = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const set = entry.target;
+      const stagger = parseInt(set.dataset.stagger || '80', 10);
+      const items = set.querySelectorAll('.reveal-item');
+      items.forEach((el, idx)=>{ el.style.transitionDelay = (idx * stagger) + 'ms'; });
+      set.classList.add('in');
+      ioReveal.unobserve(set);
     });
-  }, {threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+  }, {threshold:.18});
+  document.querySelectorAll('.reveal-set').forEach(set => ioReveal.observe(set));
 
   // ================= Counter on Scroll =================
-  // util easing + formatter
   const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
   function formatShort(n){
     const abs = Math.abs(n);
@@ -412,7 +467,7 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
     if (abs >= 1e3) return fmt(n/1e3) + 'K';
     return Math.round(n).toLocaleString('id-ID');
   }
-  function animateCount(el, target, {duration=2200, format='plain', suffix='' } = {}){
+  function animateCount(el, target, {duration=1600, format='plain', suffix='' } = {}){
     const start = 0;
     const startTs = performance.now();
     const step = (now)=>{
@@ -437,7 +492,7 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
             const format = (card.dataset.format || 'plain').toLowerCase();
             const suffix = card.dataset.suffix || '';
             const strong = card.querySelector('.count');
-            animateCount(strong, to, {duration:1600, format, suffix});
+            animateCount(strong, to, {duration:1800, format, suffix});
           });
           ioCount.unobserve(capaian);
         }
@@ -445,6 +500,24 @@ $HERO_MODE = 'kenburns'; // ganti ke 'slideshow' jika mau
     }, {threshold:.25});
     ioCount.observe(capaian);
   }
+
+  // ===== Header transparent logic (aktifkan state transparan di halaman home yang punya hero) =====
+  const html = document.documentElement;
+  if (document.querySelector('.hero-full')) {
+    html.classList.add('has-hero');
+  }
+  const header = document.querySelector('.site-header');
+  function setHeaderVars(){
+    const h = (header?.offsetHeight || 86);
+    html.style.setProperty('--header-h', h + 'px');
+  }
+  function setSolid(){
+    if (!document.querySelector('.hero-full') || window.scrollY > 16) html.classList.add('header-solid');
+    else html.classList.remove('header-solid');
+  }
+  setHeaderVars(); setSolid();
+  window.addEventListener('resize', setHeaderVars);
+  document.addEventListener('scroll', setSolid, {passive:true});
 })();
 </script>
 

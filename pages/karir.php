@@ -1,6 +1,15 @@
-<?php 
-$title='Karir'; 
-include __DIR__.'/../inc/header.php'; 
+<?php
+$title = 'Karir';
+include __DIR__ . '/../inc/header.php';
+
+$heroKicker   = 'Bergabung Bersama Kami';
+$heroTitle    = 'Karir di <span style="color:#ffb4b7">PT Rumah Keramik Indonesia</span>';
+$heroSubtitle = 'Tumbuh dalam lingkungan kerja yang inovatif dan profesional.';
+$heroFull     = true;
+$HERO_MODE    = 'kenburns';
+$heroAccent = '#ff2a33'; // merah cerah global hero
+$heroTitle  = 'Karir di <span class="accent">PT Rumah Keramik Indonesia';
+include __DIR__ . '/../inc/hero.php';
 ?>
 
 <!-- Hero Section -->

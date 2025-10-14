@@ -1,6 +1,15 @@
-<?php 
-$title = 'Tentang Kami'; 
-include __DIR__ . '/../inc/header.php'; 
+<?php
+$title = 'Tentang Kami';
+include __DIR__ . '/../inc/header.php';
+
+$heroKicker   = 'PT Rumah Keramik Indonesia';
+$heroTitle    = 'Tentang <span style="color:#ffb4b7">PT RKI</span>';
+$heroSubtitle = 'Kami berkomitmen menghadirkan produk ubin berkualitas melalui teknologi modern dan QC berlapis.';
+$heroFull     = true;
+$HERO_MODE    = 'kenburns';
+$heroAccent = '#ff2a33'; // merah cerah global hero
+$heroTitle  = 'Koleksi <span class="accent">PT Rumah Keramik Indonesia';
+include __DIR__ . '/../inc/hero.php';
 ?>
 
 <!-- Hero Section -->
