@@ -64,23 +64,17 @@ $HERO_MODE = 'kenburns';
 /* =================================================================
    HERO FULL – Ken Burns / Slideshow
    ================================================================= */
-/* HERO FULL – penuh 1 layar, header melayang di atasnya */
 .hero-full{
   position: relative;
-  block-size: 100svh;         /* aman untuk mobile address bar */
+  block-size: 100svh;
   min-block-size: 100svh;
   isolation: isolate;
   overflow: hidden;
   color: #fff;
 }
-
 @supports (height: 100dvh){
-  .hero-full{
-    block-size: 100dvh;       /* gunakan dvh kalau didukung */
-    min-block-size: 100dvh;
-  }
+  .hero-full{ block-size: 100dvh; min-block-size: 100dvh; }
 }
-
 .hero-layer{position:absolute; inset:0; background-size:cover; background-position:center;}
 .hero-overlay{
   position:absolute; inset:0;
@@ -90,7 +84,6 @@ $HERO_MODE = 'kenburns';
 }
 .hero-content{position:relative; z-index:3; display:grid; align-content:center; min-height:inherit;}
 .hero-inner{max-width:var(--container); width:100%; padding:0 20px; margin:0 auto;}
-
 .kicker{font-weight:800; letter-spacing:.12em; text-transform:uppercase; opacity:.95; margin-bottom:12px;}
 .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:20px;}
 .btn-pill{display:inline-flex; align-items:center; gap:10px; padding:12px 20px; border-radius:999px; font-weight:800; text-decoration:none; border:2px solid transparent; transition:transform .28s var(--ease), box-shadow .28s var(--ease), background .28s var(--ease), color .28s var(--ease);}
@@ -105,27 +98,9 @@ $HERO_MODE = 'kenburns';
 .hero-kenburns .kb.kb-2{animation-name:ken2; animation-delay:3s;}
 .hero-kenburns .kb.kb-3{animation-name:ken3; animation-delay:6s;}
 @keyframes fadeIn{from{opacity:0}10%{opacity:1}70%{opacity:1}to{opacity:0}}
-@keyframes ken1{
-  0%{transform:scale(1.08) translate3d(-1.5%, -1%, 0); opacity:0}
-  10%{opacity:1}
-  50%{transform:scale(1.12) translate3d(0%, 0%, 0)}
-  90%{opacity:1}
-  100%{transform:scale(1.14) translate3d(1.5%, 1%, 0); opacity:0}
-}
-@keyframes ken2{
-  0%{transform:scale(1.10) translate3d(1%, -1.2%, 0); opacity:0}
-  10%{opacity:1}
-  50%{transform:scale(1.14) translate3d(0%, 0%, 0)}
-  90%{opacity:1}
-  100%{transform:scale(1.18) translate3d(-1%, 1.2%, 0); opacity:0}
-}
-@keyframes ken3{
-  0%{transform:scale(1.06) translate3d(0.8%, 1%, 0); opacity:0}
-  10%{opacity:1}
-  50%{transform:scale(1.10) translate3d(0%, 0%, 0)}
-  90%{opacity:1}
-  100%{transform:scale(1.13) translate3d(-0.8%, -1%, 0); opacity:0}
-}
+@keyframes ken1{0%{transform:scale(1.08) translate3d(-1.5%,-1%,0);opacity:0}10%{opacity:1}50%{transform:scale(1.12)}90%{opacity:1}100%{transform:scale(1.14) translate3d(1.5%,1%,0);opacity:0}}
+@keyframes ken2{0%{transform:scale(1.10) translate3d(1%,-1.2%,0);opacity:0}10%{opacity:1}50%{transform:scale(1.14)}90%{opacity:1}100%{transform:scale(1.18) translate3d(-1%,1.2%,0);opacity:0}}
+@keyframes ken3{0%{transform:scale(1.06) translate3d(.8%,1%,0);opacity:0}10%{opacity:1}50%{transform:scale(1.10)}90%{opacity:1}100%{transform:scale(1.13) translate3d(-.8%,-1%,0);opacity:0}}
 
 /* Slideshow */
 .hero-slideshow .slide{position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 900ms var(--ease);}
@@ -212,14 +187,42 @@ $HERO_MODE = 'kenburns';
 .stat strong{ font-size:clamp(22px,3vw,32px); display:block; font-weight:900; color:var(--brand); }
 .stat span{ color:var(--muted); font-weight:600; }
 
-.partners{ display:grid; grid-template-columns:repeat(6,1fr); gap:18px; align-items:center; }
-@media (max-width:980px){ .partners{ grid-template-columns:repeat(3,1fr);} }
-.partner-card{
-  background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; display:grid; place-items:center;
-  filter:grayscale(1); opacity:.8; transition:.2s; box-shadow:var(--shadow-sm);
+/* ===== Partners Marquee (warna + loop kiri) ===== */
+.partners-marquee{
+  --marquee-duration: 28s;        /* default; diset ulang via JS sesuai panjang konten */
+  --gap: 18px;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  padding: 6px 0;
+  /* fade lembut di tepi */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent);
+          mask-image: linear-gradient(90deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent);
 }
-.partner-card:hover{ filter:grayscale(0); opacity:1; transform:translateY(-3px); box-shadow:var(--shadow-md); }
-.partner-card img{ height:28px; max-width:100%; }
+.marquee-inner{
+  display:flex; align-items:center; gap:var(--gap);
+  width: max-content;
+  will-change: transform;
+  animation: partners-marquee var(--marquee-duration) linear infinite;
+}
+.partners-marquee:hover .marquee-inner{ animation-play-state: paused; }
+
+.partner-card{
+  background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px;
+  display:grid; place-items:center;
+  /* LANGSUNG BERWARNA: tidak ada grayscale */
+  opacity:1; transition:.2s; box-shadow:var(--shadow-sm);
+  min-width: clamp(160px, 18vw, 240px);
+  height: clamp(64px, 8vw, 84px);
+}
+.partner-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.partner-card img{ height:clamp(26px,3.2vw,34px); max-width:100%; object-fit:contain; }
+
+/* Animasi geser tak terputus (konten digandakan via JS) */
+@keyframes partners-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }  /* -50% karena isi track digandakan */
+}
 
 /* =================================================================
    REVEAL ENGINE (scroll animations + stagger)
@@ -269,7 +272,6 @@ $HERO_MODE = 'kenburns';
         <span style="color:#ff2a33">Lantai</span> &
         <span style="color:#ff2a33">Dinding</span>
       </h1>
-
       <p class="muted" style="max-width:720px; color:#e5e7eb">Menghadirkan kualitas, ketahanan, dan estetika terbaik untuk setiap ruang.</p>
       <div class="hero-actions">
         <a href="index.php?page=produk" class="btn-pill btn-brand">📦 Lihat Produk</a>
@@ -398,14 +400,20 @@ $HERO_MODE = 'kenburns';
 
     <div class="sp-24"></div>
 
-    <div class="partners reveal-set" data-stagger="60">
-      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra1.png" alt="Mitra 1"></div>
-      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra2.png" alt="Mitra 2"></div>
-      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra3.png" alt="Mitra 3"></div>
-      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra4.png" alt="Mitra 4"></div>
-      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra5.png" alt="Mitra 5"></div>
-      <div class="partner-card reveal-item fade-up"><img src="assets/img/mitra6.png" alt="Mitra 6"></div>
+    <!-- ===== PARTNERS MARQUEE (warna & looping kiri) ===== -->
+    <div class="partners-marquee" aria-label="Mitra Kami">
+      <div class="marquee-inner" id="PartnersMarqueeTrack">
+        <!-- TRACK A -->
+        <div class="partner-card"><img src="assets/img/mitra1.png" alt="Mitra 1"></div>
+        <div class="partner-card"><img src="assets/img/mitra2.png" alt="Mitra 2"></div>
+        <div class="partner-card"><img src="assets/img/mitra3.png" alt="Mitra 3"></div>
+        <div class="partner-card"><img src="assets/img/mitra4.png" alt="Mitra 4"></div>
+        <div class="partner-card"><img src="assets/img/mitra5.png" alt="Mitra 5"></div>
+        <div class="partner-card"><img src="assets/img/mitra6.png" alt="Mitra 6"></div>
+        <!-- (TRACK B akan otomatis dikloning via JS untuk loop mulus) -->
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -415,7 +423,7 @@ $HERO_MODE = 'kenburns';
   // Page enter
   window.addEventListener('load', ()=> document.body.classList.add('page-entered'));
 
-  // Slideshow (jalan kalau mode slideshow)
+  // Slideshow (kalau mode slideshow)
   const hero = document.getElementById('Hero');
   if(hero && hero.classList.contains('hero-slideshow')){
     const slides = [...hero.querySelectorAll('.slide')];
@@ -428,22 +436,19 @@ $HERO_MODE = 'kenburns';
     };
     const next = () => show((i+1) % slides.length);
     T = setInterval(next, 6000);
-    dots.forEach((btn,idx)=>{
-      btn.addEventListener('click', ()=>{ clearInterval(T); show(idx); T = setInterval(next, 6000); });
-    });
+    dots.forEach((btn,idx)=>{ btn.addEventListener('click', ()=>{ clearInterval(T); show(idx); T = setInterval(next, 6000); }); });
   }
 
-  // Section title underline animasi saat masuk
+  // Section title underline animasi
   const titles = ['title-why','title-products','title-counters']
     .map(id => document.getElementById(id))
     .filter(Boolean);
-
   const ioTitle = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); ioTitle.unobserve(e.target); }});
   }, {threshold:.3});
   titles.forEach(t => ioTitle.observe(t));
 
-  // Reveal engine + stagger
+  // Reveal + stagger
   const ioReveal = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{
       if(!entry.isIntersecting) return;
@@ -457,7 +462,7 @@ $HERO_MODE = 'kenburns';
   }, {threshold:.18});
   document.querySelectorAll('.reveal-set').forEach(set => ioReveal.observe(set));
 
-  // ================= Counter on Scroll =================
+  // Counter on Scroll
   const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
   function formatShort(n){
     const abs = Math.abs(n);
@@ -479,7 +484,6 @@ $HERO_MODE = 'kenburns';
     };
     requestAnimationFrame(step);
   }
-
   let countersTriggered = false;
   const capaian = document.getElementById('Capaian');
   if (capaian){
@@ -492,7 +496,7 @@ $HERO_MODE = 'kenburns';
             const format = (card.dataset.format || 'plain').toLowerCase();
             const suffix = card.dataset.suffix || '';
             const strong = card.querySelector('.count');
-            animateCount(strong, to, {duration:1800, format, suffix});
+            animateCount(strong, to, {duration:2800, format, suffix});
           });
           ioCount.unobserve(capaian);
         }
@@ -501,11 +505,9 @@ $HERO_MODE = 'kenburns';
     ioCount.observe(capaian);
   }
 
-  // ===== Header transparent logic (aktifkan state transparan di halaman home yang punya hero) =====
+  // Header transparan saat ada hero
   const html = document.documentElement;
-  if (document.querySelector('.hero-full')) {
-    html.classList.add('has-hero');
-  }
+  if (document.querySelector('.hero-full')) html.classList.add('has-hero');
   const header = document.querySelector('.site-header');
   function setHeaderVars(){
     const h = (header?.offsetHeight || 86);
@@ -518,6 +520,37 @@ $HERO_MODE = 'kenburns';
   setHeaderVars(); setSolid();
   window.addEventListener('resize', setHeaderVars);
   document.addEventListener('scroll', setSolid, {passive:true});
+})();
+</script>
+
+<script>
+// Duplikasi isi trek supaya loop mulus & set durasi berdasar panjang konten
+(function(){
+  const track = document.getElementById('PartnersMarqueeTrack');
+  if (!track) return;
+
+  // Gandakan anak-anak sekali -> total konten 2x
+  const items = Array.from(track.children);
+  items.forEach(el => track.appendChild(el.cloneNode(true)));
+
+  // Hitung total lebar konten agar kecepatan konsisten
+  const gap = 18; // harus sama dengan CSS --gap
+  function computeDuration(){
+    let total = 0;
+    Array.from(track.children).forEach(el => { total += el.getBoundingClientRect().width + gap; });
+    const speed = 110; // px per detik (atur 90–140 sesuai selera)
+    const duration = Math.max(16, Math.round(total / speed));
+    track.style.setProperty('--marquee-duration', duration + 's');
+  }
+  // Tunggu layout stabil dulu
+  window.addEventListener('load', computeDuration);
+  computeDuration();
+  // Responsif
+  let timer;
+  window.addEventListener('resize', () => {
+    clearTimeout(timer);
+    timer = setTimeout(computeDuration, 150);
+  });
 })();
 </script>
 
